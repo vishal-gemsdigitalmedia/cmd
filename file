@@ -1,0 +1,174 @@
+REFRANCE LINK : https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04
+
+PHPMYADMIN : https://www.digitalocean.com/community/tutorials/how-to-install-and-secure-phpmyadmin-on-ubuntu-20-04
+
+CRON : https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
+
+Composer install - https://www.digitalocean.com/community/tutorials/how-to-install-composer-on-ubuntu-20-04-quickstart
+
+------ aPACHE cONFIG OPEN
+
+		sudo nano /etc/apache2/apache2.conf
+		
+					<Directory /var/www/>
+				Options Indexes FollowSymLinks
+				AllowOverride All
+				Require all granted
+		</Directory>
+
+------ Permisssion
+
+	sudo chmod -R 777 /var/www/html/*
+	sudo chmod -R 777 /var/www/sampledomain.com/html/*
+
+------ Step 1 — Installing Apache and Updating the Firewall
+
+	sudo apt update
+
+	sudo apt install apache2
+
+	sudo ufw app list
+
+	sudo ufw app info "Apache Full"
+
+	sudo ufw allow "Apache Full"
+
+
+------ How To Find your Server’s Public IP Address
+
+	ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
+
+	sudo apt install curl
+
+	curl http://icanhazip.com
+
+
+------ Step 2 — Installing MySQL
+
+	sudo apt install mysql-server
+
+	sudo mysql_secure_installation
+
+	Y
+
+	Select 1, 2 , 3
+
+	Set Your Password 
+
+	sudo mysql
+
+	exit
+
+------- Step 3 — Installing PHP
+
+	sudo apt install php libapache2-mod-php php-mysql
+
+	OPTIONAL 
+
+	sudo nano /etc/apache2/mods-enabled/dir.conf
+
+	sudo systemctl restart apache2
+
+	sudo systemctl status apache2
+
+	CHECK PHP 
+
+	apt search php- | less
+
+
+----- Step 4 — Setting Up a Virtual Host (Recommended)
+
+
+
+----- PHPMYADMIN 
+
+
+	sudo apt update
+
+	sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
+
+	ENTER to select Apache.
+
+	Select Yes when asked whether to use dbconfig-common to set up the database
+
+	ENTER to select abort 
+
+	sudo mysql
+
+	mysql -u root -p
+
+	UNINSTALL COMPONENT "file://component_validate_password";
+
+	exit
+
+	sudo apt install phpmyadmin
+
+	INSTALL COMPONENT "file://component_validate_password";
+
+
+	sudo phpenmod mbstring
+
+	sudo systemctl restart apache2
+
+
+------ Step 2 — Adjusting User Authentication and Privileges
+
+	sudo mysql
+
+	SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+	ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'Gems@123';
+
+	SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+
+	sudo mysql
+
+	CREATE USER 'root1'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'Crypsoar@789';
+
+	GRANT ALL PRIVILEGES ON *.* TO 'root1'@'localhost' WITH GRANT OPTION;
+
+	sudo cp /etc/phpmyadmin/apache.conf /etc/apache2/conf-enabled/phpmyadmin.conf
+
+	sudo systemctl restart apache2
+
+	update user set password='Gems@123' where User='root1';
+
+
+----- upload max size 
+
+	sudo nano /etc/php/7.4/apache2/php.ini
+	
+------ Enabling mod_rewrite
+
+	sudo a2enmod rewrite
+	
+	sudo systemctl restart apache2
+
+
+----------------- CRON 
+
+ReFRANCE : https://www.digitalocean.com/community/tutorials/how-to-use-cron-to-automate-tasks-ubuntu-1804
+
+sudo apt install cron
+
+sudo systemctl enable cron
+
+sudo EDITOR=vi crontab -e  OPEN EDITOR FILE
+
+------------------ Enabaled PHPMYADMIN 
+
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+sudo a2enconf phpmyadmin
+sudo service apache2 reload
+
+
+____________ COMPOSER INSTALLL 
+
+https://www.digitalocean.com/community/tutorials/how-to-install-composer-on-ubuntu-20-04-quickstart
+ 
+
+sudo certbot certonly --standalone --agree-tos --preferred-challenges http -d crypsoar.com
+apt install python3-certbot-apache
+sudo certbot --apache --agree-tos --preferred-challenges http -d crypsoar.com
+sudo certbot certonly --manual --agree-tos --preferred-challenges dns -d crypsoar.com -d *.crypsoar.com 
