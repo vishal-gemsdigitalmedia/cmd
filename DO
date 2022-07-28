@@ -1,0 +1,82 @@
+sudo apt update
+
+sudo apt install apache2
+
+sudo ufw app list
+
+sudo ufw app info "Apache Full"
+
+ip addr show eth0 | grep inet | awk '{ print $2; }' | sed 's/\/.*$//'
+
+sudo apt install curl
+
+sudo apt install mysql-server
+
+sudo mysql_secure_installation
+
+sudo mysql
+
+sudo apt install php libapache2-mod-php php-mysql
+
+sudo vi /etc/apache2/mods-enabled/dir.conf  
+
+- i - Edit option on 
+
+Save : ESC Then ; Then w Then Enter 
+
+	<IfModule mod_dir.c>
+		DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+	</IfModule>
+	
+sudo systemctl restart apache2
+
+sudo systemctl status apache2
+
+sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
+
+sudo mysql
+
+UNINSTALL COMPONENT "file://component_validate_password";
+
+exit
+
+sudo apt install phpmyadmin
+
+sudo mysql
+
+INSTALL COMPONENT "file://component_validate_password";
+
+sudo phpenmod mbstring
+
+sudo systemctl restart apache2
+
+mysql
+
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+
+sudo mysql    ( mysql -u root -p ) 
+
+CREATE USER 'sammy'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'password';
+
+ALTER USER 'sammy'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+
+GRANT ALL PRIVILEGES ON *.* TO 'sammy'@'localhost' WITH GRANT OPTION;
+
+exit
+
+sudo systemctl restart apache2
+
+sudo ln -s /etc/phpmyadmin/apache.conf /etc/apache2/conf-available/phpmyadmin.conf
+sudo a2enconf phpmyadmin
+sudo service apache2 reload
+
+
+------ Enabling mod_rewrite
+
+	sudo a2enmod rewrite
+	
+	sudo systemctl restart apache2
