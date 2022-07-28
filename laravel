@@ -18,3 +18,10 @@ Run php artisan migrate
 Run php artisan serve
 
 Go to localhost:8000
+-------------------------------------
+
+https://laraveldaily.com/mail-notifications-customize-templates/
+
+
+php artisan vendor:publish --tag=laravel-notifications
+php artisan vendor:publish --tag=laravel-mail
